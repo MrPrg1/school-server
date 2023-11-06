@@ -47,3 +47,34 @@ class ClassInfo(models.Model):
     classNumber = models.IntegerField(help_text='شماره کلاس را وارد نمایید')
 
 
+    def __str__(self):
+        return self.name
+
+
+
+class Student(models.Model):     
+    name = models.CharField(max_length=100, help_text='نام خود را وارد نمایید')
+    lastName = models.CharField(max_length=100, help_text='نام خانوادگی خود را وارد نمایید')
+    nationalCode = models.IntegerField(unique=True, help_text='شماره ملی خود را وارد نمایید')
+    phoneNumber = models.IntegerField(unique=True, help_text='شماره تلفن خود را وارد نمایید')
+    fatherPhoneNumber = models.IntegerField(help_text='شماره تلفن پدر را وارد نمایید')
+    fatherName = models.CharField(max_length=100, help_text='نام پدر را وارد نمایید')
+    homePhoneNumber = models.IntegerField(help_text='شماره تلفن منزل را وارد نمایید')
+    dateOfBirth = models.DateField(auto_now=False, auto_now_add=False, help_text='تاریخ تولد خود را وارد نمایید')
+    address = models.CharField(max_length=500, null=True, blank=True, help_text='آدرس منزل خود را وارد نمایید')
+    image = models.ImageField(upload_to='imageStudents', null=True, blank=True, help_text='عکس خود را وارد نمایید')
+
+
+
+    def __str__(self):
+        return f'{self.name} , {self.lastName}'
+
+
+
+
+class StudentClass(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    clas = models.ForeignKey(ClassInfo, on_delete=models.CASCADE)
+
+
+    
